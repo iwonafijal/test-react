@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
 
-function App() {
+const App = () => {
+  const [list, setList] = useState(["kot", "pies", "malpa"]);
+  const [input, setInput] = useState("");
+
+  const onRemoveHandler = (i) => {
+    const newArray = [...list];
+    newArray.splice(i, 1);
+    setList(newArray);
+  };
+
+  const renderListItems = list.map((item, i) => (
+    <li key={i} onClick={() => onRemoveHandler(i)}>
+      {item}
+    </li>
+  ));
+
+  const onClickHandler = () => {
+    setList([...list, input]);
+    // setList(["kot", "pies", "malpa", "zaba"])
+    setInput("");
+  };
+
+  const onChange = (event) => {
+    // console.log(event.target.value);
+    setInput(event.target.value);
+  };
+
+  console.log(input);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>To-do-list</h2>
+      <ul>{renderListItems}</ul>
+      <input value={input} onChange={onChange} name="animal" />
+      <button onClick={onClickHandler}>Add animal</button>
     </div>
   );
-}
+};
 
 export default App;
